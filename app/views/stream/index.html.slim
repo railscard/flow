@@ -1,2 +1,2 @@
-h1 Stream#index
-p Find me in app/views/stream/index.html.slim
+= render partial: 'partials/header'
+= render partial: 'partials/list', locals: {list: @streams}

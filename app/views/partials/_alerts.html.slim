@@ -1,0 +1,5 @@
+- flash.each do |key,value|
+  .alert.mt-2.alert-info
+    = link_to('×','#', data: {dismiss:'alert'}, class:'close')
+    ul
+      li = value
