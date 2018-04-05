@@ -1,12 +1,8 @@
 Rails.application.routes.draw do
-  get 'stream/index'
-
-  get 'download/index'
-
-  get 'home/index'
-
   devise_for :users
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  root 'home#index'
 
+  resources :stream
+  resources :download
+
+  root 'stream#index'
 end
