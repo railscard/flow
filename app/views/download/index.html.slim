@@ -3,12 +3,12 @@ nav.navbar.navbar-light.bg-light.justify-content-between.navbar-expand-sm
   div.collapse.navbar-collapse
     ul.navbar-nav.mt-0
       li.nav-item.active
-        = link_to('Processes', root_path, class: 'nav-link')
+        = link_to('Processes', root_path, method: :get, class: 'nav-link')
       li.nav-item
-        = link_to('Files', {controller: :download}, class: 'nav-link')
+        = link_to('Files', {controller: :download, method: :get}, class: 'nav-link')
   = link_to('Logout', destroy_user_session_path, method: :delete, class: 'btn btn-outline-primary')
 .col-12
   div.list-group.mt-5
     - (1..5).each_with_index do |row, i|
-      = link_to("Process #{i+1}", '#', method: :get, class: 'list-group-item list-group-item-action')
-    = link_to('Add new process', '#', method: :get, class: 'list-group-item list-group-item-action list-group-item-primary')
+      = link_to("Download #{i+1}", '#', method: :get, class: 'list-group-item list-group-item-action')
+    = link_to('Download CSV', '#', method: :get, class: 'list-group-item list-group-item-action list-group-item-primary')

@@ -10,10 +10,50 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180404175227) do
+ActiveRecord::Schema.define(version: 20180405073121) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "downloads", force: :cascade do |t|
+    t.string "name"
+    t.datetime "date"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_downloads_on_user_id"
+  end
+
+  create_table "inputs", force: :cascade do |t|
+    t.integer "line"
+    t.json "content"
+    t.bigint "download_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["download_id"], name: "index_inputs_on_download_id"
+  end
+
+  create_table "outputs", force: :cascade do |t|
+    t.integer "line"
+    t.json "content"
+    t.bigint "download_id"
+    t.string "type"
+    t.bigint "stream_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["download_id"], name: "index_outputs_on_download_id"
+    t.index ["stream_id"], name: "index_outputs_on_stream_id"
+  end
+
+  create_table "streams", force: :cascade do |t|
+    t.string "name"
+    t.datetime "date"
+    t.text "code"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_streams_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -32,4 +72,9 @@ ActiveRecord::Schema.define(version: 20180404175227) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "downloads", "users"
+  add_foreign_key "inputs", "downloads"
+  add_foreign_key "outputs", "downloads"
+  add_foreign_key "outputs", "streams"
+  add_foreign_key "streams", "users"
 end
