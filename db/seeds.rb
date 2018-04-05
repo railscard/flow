@@ -5,3 +5,15 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+user = User.create(email: 'dev.yuriy.a@gmail.com', password: 'password')
+
+(1..10).each do |i|
+  Stream.create(user_id: user.id, name: "Process #{i}", code: 'hello world')
+  Download.create(user_id: user.id, name: "Download #{i}")
+end
+
+Download.all.each_with_index do |download, i|
+  Input.create(download_id: i+1, line: i+1, content: 'content')
+  Output.create(download_id: i+1, stream_id: i+1, line: i+1, content: 'content', responce: 'success')
+end

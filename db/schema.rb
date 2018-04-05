@@ -17,7 +17,6 @@ ActiveRecord::Schema.define(version: 20180405073121) do
 
   create_table "downloads", force: :cascade do |t|
     t.string "name"
-    t.datetime "date"
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -37,7 +36,7 @@ ActiveRecord::Schema.define(version: 20180405073121) do
     t.integer "line"
     t.json "content"
     t.bigint "download_id"
-    t.string "type"
+    t.string "responce"
     t.bigint "stream_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -47,7 +46,6 @@ ActiveRecord::Schema.define(version: 20180405073121) do
 
   create_table "streams", force: :cascade do |t|
     t.string "name"
-    t.datetime "date"
     t.text "code"
     t.bigint "user_id"
     t.datetime "created_at", null: false
