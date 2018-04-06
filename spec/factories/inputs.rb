@@ -1,7 +1,8 @@
 FactoryBot.define do
   factory :input do
-    line 1
-    content ""
-    download nil
+    sequence(:line)
+    content { Faker::Lorem.sentence }
+
+    download
   end
 end
