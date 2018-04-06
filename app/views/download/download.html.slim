@@ -1,3 +1,25 @@
+= render partial: 'partials/header'
+
 - if @download
-  p Here is download
-p Here is no download
+  .row.mt-4
+    .col-12
+      h3 = @download.name
+  .row.mt-4
+    .col-6
+      .editor.editor-input
+        p Input
+    .col-6
+      .editor.editor-output
+        p Output
+
+- if @errors
+  .row.mt-4
+    .col-12
+      ul
+        - @errors.each do |error|
+          li = error.content
+
+- if @download
+  .row.mt-4
+    .col-12
+      = link_to('History', { action: :history, id: @download.id }, method: :get, class: 'btn btn-outline-primary')

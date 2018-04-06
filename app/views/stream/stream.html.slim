@@ -1,3 +1,23 @@
-- if @stream
-  p Here is stream
-p Here is no stream
+= render partial: 'partials/header'
+.row
+  .col-12.mt-4
+    - if @stream
+      h3 = @stream.name
+
+    #editor-stream.mt-4
+      - if @stream.code.empty?
+        pre
+          | function process(input) {
+                // Write your code below
+
+                return output;
+            }
+      - else
+        pre = @stream.code
+
+.row
+  .col-12.mt-4
+    = form_for(@stream, method: :put, html: { class: 'form' }) do |f|
+      = f.hidden_field :code
+      = f.file_field :input_file, class: 'form-control-file'
+      = f.submit 'Process', class: 'btn btn-primary mt-3'
