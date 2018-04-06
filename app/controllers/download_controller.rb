@@ -4,6 +4,16 @@ class DownloadController < ApplicationController
                  .where(user_id: current_user.id)
                  .order(:created_at)
   end
+
+  def history
+    @download = Download.find_by(id: params[:id])
+    @errors = Output
+                .where(download_id: @download.id)
+                .order(:created_at)
+
+    render 'download/history'
+  end
+
   def show
     if params[:id]
       @download = Download.find_by(id: params[:id])
