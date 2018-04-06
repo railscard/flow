@@ -6,14 +6,14 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+require 'faker'
+
 user = User.create(email: 'dev.yuriy.a@gmail.com', password: 'password')
+code = File.read("#{Rails.root}/spec/support/fixtures/stream1.js")
+csv  = File.read("#{Rails.root}/spec/support/fixtures/csv1.csv")
 
-(1..10).each do |i|
-  Stream.create(user_id: user.id, name: "Process #{i}", code: 'hello world')
-  Download.create(user_id: user.id, name: "Download #{i}")
-end
 
-Download.all.each_with_index do |download, i|
-  Input.create(download_id: i+1, line: i+1, content: 'content')
-  Output.create(download_id: i+1, stream_id: i+1, line: i+1, content: 'content', responce: 'success')
+(1..3).each do
+  Stream.create(user_id: user.id, name: Faker::Lovecraft.tome.to_s, code: code)
+  Download.create(user_id: user.id, name: Faker::Lovecraft.tome.to_s)
 end
