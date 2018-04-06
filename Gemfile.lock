@@ -50,6 +50,10 @@ GEM
     bindex (0.5.0)
     builder (3.2.3)
     byebug (10.0.2)
+    carrierwave (1.2.2)
+      activemodel (>= 4.0.0)
+      activesupport (>= 4.0.0)
+      mime-types (>= 1.16)
     coderay (1.1.2)
     concurrent-ruby (1.0.5)
     crass (1.0.3)
@@ -73,6 +77,8 @@ GEM
     factory_bot_rails (4.8.2)
       factory_bot (~> 4.8.2)
       railties (>= 3.0.0)
+    faker (1.8.7)
+      i18n (>= 0.7)
     ffi (1.9.23)
     formatador (0.2.5)
     fuubar (2.3.1)
@@ -121,6 +127,9 @@ GEM
     mail (2.7.0)
       mini_mime (>= 0.1.1)
     method_source (0.9.0)
+    mime-types (3.1)
+      mime-types-data (~> 3.2015)
+    mime-types-data (3.2016.0521)
     mini_mime (1.0.0)
     mini_portile2 (2.3.0)
     minitest (5.11.3)
@@ -219,6 +228,7 @@ GEM
       actionpack (>= 3.1)
       railties (>= 3.1)
       slim (~> 3.0)
+    smarter_csv (1.2.3)
     spring (2.0.2)
       activesupport (>= 4.2)
     spring-watcher-listen (2.0.1)
@@ -267,10 +277,12 @@ PLATFORMS
 
 DEPENDENCIES
   byebug
+  carrierwave
   database_cleaner
   devise
   devise-bootstrapped!
   factory_bot_rails
+  faker
   fuubar
   guard
   guard-livereload
@@ -286,6 +298,7 @@ DEPENDENCIES
   shoulda-matchers
   simplecov
   slim-rails
+  smarter_csv
   spring
   spring-watcher-listen (~> 2.0.0)
   therubyracer

@@ -34,6 +34,7 @@ gem 'jbuilder', '~> 2.5'
 # gem 'capistrano-rails', group: :development
 
 gem 'devise'
+gem 'smarter_csv'
 gem 'slim-rails'
 gem 'devise-bootstrapped', github: 'king601/devise-bootstrapped', branch: 'bootstrap4'
 
@@ -51,6 +52,7 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'shoulda-matchers'
   gem 'fuubar'
+  gem 'faker'
 
   gem 'simplecov', require: false
   gem 'database_cleaner'
