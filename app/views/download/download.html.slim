@@ -3,23 +3,16 @@
 - if @download
   .row.mt-4
     .col-12
-      h3 = @download.name
+      h3 = "#{@download.name}"
+      p = "Stream: #{Stream.find(@download.stream_id).name}, Processed: #{@download.created_at.strftime('%T')}"
   .row.mt-4
     .col-6
-      .editor.editor-input
-        p Input
+      p.lead Input
+      / #editor-input
+      pre = @input.map(&:content).flatten
     .col-6
-      .editor.editor-output
-        p Output
+      p.lead Output
+      / #editor-output
+      pre = @output.map(&:content).flatten
 
-- if @errors
-  .row.mt-4
-    .col-12
-      ul
-        - @errors.each do |error|
-          li = error.content
-
-- if @download
-  .row.mt-4
-    .col-12
-      = link_to('History', { action: :history, id: @download.id }, method: :get, class: 'btn btn-outline-primary')
+= javascript_pack_tag 'editor_output'
