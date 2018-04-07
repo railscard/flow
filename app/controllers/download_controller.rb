@@ -2,22 +2,19 @@ class DownloadController < ApplicationController
   def index
     @downloads = Download
                  .where(user_id: current_user.id)
-                 .order(:created_at)
+                 .order(created_at: :desc)
   end
 
   def history
     @download = Download.find_by(id: params[:id])
-    @errors = Output
-                .where(download_id: @download.id)
-                .order(:created_at)
 
     render 'download/history'
   end
 
   def show
-    if params[:id]
-      @download = Download.find_by(id: params[:id])
-    end
+    @download = Download.find_by(id: params[:id])
+    @input = Input.where(download_id: @download.id)
+    @output = Output.where(download_id: @download.id)
 
     render 'download'
   end
