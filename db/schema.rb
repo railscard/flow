@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180407120604) do
+ActiveRecord::Schema.define(version: 20180407144718) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,11 +34,20 @@ ActiveRecord::Schema.define(version: 20180407120604) do
     t.index ["download_id"], name: "index_inputs_on_download_id"
   end
 
+  create_table "output_errors", force: :cascade do |t|
+    t.bigint "stream_id"
+    t.bigint "download_id"
+    t.string "message"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["download_id"], name: "index_output_errors_on_download_id"
+    t.index ["stream_id"], name: "index_output_errors_on_stream_id"
+  end
+
   create_table "outputs", force: :cascade do |t|
     t.integer "line"
     t.json "content"
     t.bigint "download_id"
-    t.string "responce"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["download_id"], name: "index_outputs_on_download_id"
@@ -73,6 +82,8 @@ ActiveRecord::Schema.define(version: 20180407120604) do
   add_foreign_key "downloads", "streams"
   add_foreign_key "downloads", "users"
   add_foreign_key "inputs", "downloads"
+  add_foreign_key "output_errors", "downloads"
+  add_foreign_key "output_errors", "streams"
   add_foreign_key "outputs", "downloads"
   add_foreign_key "streams", "users"
 end

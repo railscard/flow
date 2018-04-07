@@ -3,5 +3,4 @@ class Output < ApplicationRecord
 
   validates :line, presence: true
   validates :content, presence: true
-  validates :responce, presence: true
 end
