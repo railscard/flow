@@ -15,7 +15,7 @@ class DownloadController < ApplicationController
     @download = Download.find_by(id: params[:id])
     @input = Input.where(download_id: @download.id)
     @output = Output.where(download_id: @download.id)
-
+    @errors = OutputError.select(:message).where(download_id: @download.id).distinct
     render 'download'
   end
 
