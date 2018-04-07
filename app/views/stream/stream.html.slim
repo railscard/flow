@@ -19,7 +19,7 @@
   .col-12.mt-4
     = form_for(@stream, method: :put, html: { class: 'form' }) do |f|
       = f.hidden_field :code
-      = f.file_field :input_file, :accept => 'text/csv', class: 'form-control-file'
-      = f.submit 'Process', class: 'btn btn-primary mt-3'
+      = f.file_field :input_file, :accept => 'text/csv', class: 'form-control-file', id: 'submit-file'
+      = f.submit 'Process', class: 'btn btn-primary mt-3', id: 'submit'
 
-= javascript_pack_tag 'editor'
+= javascript_pack_tag 'editor_stream'
