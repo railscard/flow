@@ -9,11 +9,3 @@
 require 'faker'
 
 user = User.create(email: 'dev.yuriy.a@gmail.com', password: 'password')
-code = File.read("#{Rails.root}/spec/support/fixtures/stream1.js")
-csv  = File.read("#{Rails.root}/spec/support/fixtures/csv1.csv")
-
-
-(1..3).each do
-  Stream.create(user_id: user.id, name: Faker::Lovecraft.tome.to_s, code: code)
-  Download.create(user_id: user.id, name: Faker::Lovecraft.tome.to_s)
-end
