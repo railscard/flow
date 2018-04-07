@@ -15,11 +15,17 @@ class Stream < ApplicationRecord
     input.each_with_index do |el, i|
       Input.create(line: i, content: el.to_json, download_id: download_id)
 
-      cxt['input']  = el
-      cxt['output'] = process.call(cxt['input'])
-      result = cxt.eval('JSON.stringify(output)')
+      cxt['input'] = el
 
-      Output.create(line: i, content: result, responce: 'success', download_id: download_id)
+      begin
+        cxt['output'] = process.call(cxt['input'])
+      rescue StandardError => error
+        OutputError.create(download_id: download_id, message: error.message)
+        Output.create(line: i, content: 'null', download_id: download_id)
+      else
+        result = cxt.eval('JSON.stringify(output)')
+        Output.create(line: i, content: result, download_id: download_id)
+      end
     end
   end
 
