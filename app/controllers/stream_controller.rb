@@ -15,10 +15,12 @@ class StreamController < ApplicationController
   def update
     @stream = Stream.find(params[:id])
     @stream.update_attributes(code: stream_params[:code])
+    @download = Download.new(name: stream_params[:input_file].original_filename, user_id: current_user.id, stream_id: @stream.id)
+    @download.save
 
-    @stream.process(stream_params[:input_file])
+    @stream.process(stream_params[:input_file], @download.id)
 
-    redirect_to action: :show, id: @stream.id
+    redirect_to controller: :download, action: :show, id: @download.id
   end
 
   def show
