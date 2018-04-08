@@ -1,12 +1,30 @@
 ENV['RAILS_ENV'] = 'test'
 
-# require 'simplecov'
-# SimpleCov.start 'rails'
+require 'simplecov'
+SimpleCov.start 'rails'
 
 require File.expand_path('../../config/environment', __FILE__)
 require 'rspec/rails'
 require 'faker'
 require 'database_cleaner'
+require 'capybara/rspec'
+require 'selenium/webdriver'
+
+Capybara.register_driver :chrome do |app|
+  Capybara::Selenium::Driver.new(app, browser: :chrome)
+end
+
+Capybara.register_driver :headless_chrome do |app|
+  capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
+    chromeOptions: { args: %w(headless disable-gpu) }
+  )
+
+  Capybara::Selenium::Driver.new app,
+                                 browser:              :chrome,
+                                 desired_capabilities: capabilities
+end
+
+Capybara.javascript_driver = :headless_chrome
 
 RSpec.configure do |config|
   config.expect_with :rspec do |expectations|
@@ -20,7 +38,9 @@ RSpec.configure do |config|
   config.shared_context_metadata_behavior = :apply_to_host_groups
 
   config.before(:suite) do
-    DatabaseCleaner.strategy = :truncation
+    DatabaseCleaner.clean_with :truncation  # clean DB of any leftover data
+    DatabaseCleaner.strategy = :transaction # rollback transactions between each test
+    # Rails.application.load_seed # (optional) seed DB
   end
 
   config.before(:each) do
