@@ -35,6 +35,8 @@ gem 'jbuilder', '~> 2.5'
 
 gem 'devise'
 gem 'smarter_csv'
+gem 'csv_sniffer'
+gem 'carrierwave'
 gem 'slim-rails'
 gem 'devise-bootstrapped', github: 'king601/devise-bootstrapped', branch: 'bootstrap4'
 
@@ -49,6 +51,8 @@ group :development, :test do
   gem 'guard-livereload'
 
   gem 'rspec-rails'
+  gem 'capybara'
+  gem 'capybara-selenium'
   gem 'factory_bot_rails'
   gem 'shoulda-matchers'
   gem 'fuubar'
