@@ -8,7 +8,9 @@ class Download < ApplicationRecord
   validates :name, presence: true
 
   def self.prettify(arr)
-    arr = arr.map { |el| JSON.parse(el.content) }
+    arr = arr.map do |el|
+        JSON.parse(el.content)
+    end
 
     JSON.pretty_generate(arr.flatten)
   end

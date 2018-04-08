@@ -32,7 +32,7 @@ class Stream < ApplicationRecord
 
   def output_error(download_id, error, i)
     OutputError.create(download_id: download_id, message: error.message)
-    Output.create(line: i, content: 'null', download_id: download_id)
+    Output.create(line: i, content: nil.to_json, download_id: download_id)
   end
 
   def parse(file)
