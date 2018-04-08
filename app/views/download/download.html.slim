@@ -4,17 +4,17 @@
   .row.mt-4
     .col-12
       h3 = "#{@download.name}"
-      p = "Stream: #{Stream.find(@download.stream_id).name}"
+      p = "Stream: #{@stream.name}"
   .row
     .col-6
       p.lead Input:
       #editor-input
-        pre = JSON.pretty_generate(@input.map{|el| JSON.parse(el.content)}.flatten)
+        pre = @input
     .col-6
       p.lead Output:
       #editor-output
-        pre = JSON.pretty_generate(@output.map{|el| JSON.parse(el.content)}.flatten)
-- if @errors
+        pre = @output
+- if !@errors.empty?
   .row.mt-4.mb-5
     .col-12
       p.lead Errors:
