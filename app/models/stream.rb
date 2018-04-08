@@ -19,23 +19,36 @@ class Stream < ApplicationRecord
 
       begin
         cxt['output'] = process.call(cxt['input'])
-      rescue StandardError => error
-        OutputError.create(download_id: download_id, message: error.message)
-        Output.create(line: i, content: 'null', download_id: download_id)
+      rescue Exception => error
+        output_error(download_id, error, i)
       else
-        result = cxt.eval('JSON.stringify(output)')
-        Output.create(line: i, content: result, download_id: download_id)
+        output_success(cxt, download_id, i)
       end
     end
   end
 
   private
 
+  def output_success(cxt, download_id, i)
+    result = cxt.eval('JSON.stringify(output)')
+    Output.create(line: i, content: result, download_id: download_id)
+  end
+
+  def output_error(download_id, error, i)
+    OutputError.create(download_id: download_id, message: error.message)
+    Output.create(line: i, content: 'null', download_id: download_id)
+  end
+
   def parse(file)
-    SmarterCSV.process(
-      File.open(
-        Rails.root.join('public', 'uploads', file.original_filename)
-      )
-    )
+    uploader = CsvUploader.new
+    uploader.store!(file)
+
+    uploader.retrieve_from_store!("#{file.original_filename}")
+
+    file = File.open(uploader.path)
+
+    delimiter = CsvSniffer.detect_delimiter(file)
+
+    SmarterCSV.process(file, col_sep: delimiter)
   end
 end

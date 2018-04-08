@@ -1,8 +1,6 @@
 class StreamController < ApplicationController
   def index
-    @streams = Stream.where(user_id: current_user.id)
-                 .order(:created_at)
-
+    @streams = User.find(current_user.id).streams
   end
 
   def create
@@ -14,8 +12,12 @@ class StreamController < ApplicationController
 
   def update
     @stream = Stream.find(params[:id])
-    @stream.update_attributes(code: stream_params[:code])
-    @download = Download.new(name: stream_params[:input_file].original_filename, user_id: current_user.id, stream_id: @stream.id)
+    @stream.update(code: stream_params[:code])
+    filename = stream_params[:input_file].original_filename
+
+    @download = Download.new(name: filename,
+                             user_id: current_user.id,
+                             stream_id: @stream.id)
     @download.save
 
     @stream.process(stream_params[:input_file], @download.id)
