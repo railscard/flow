@@ -6,18 +6,14 @@ class Stream < ApplicationRecord
   validates :name, presence: true
 
   def process(input, download_id)
-    cxt = V8::Context.new
-    cxt.eval(code)
-    process = cxt[:process]
-
-    input = parse(input)
-
-    input.each_with_index do |el, i|
+    parse(input).each_with_index do |el, i|
       Input.create(line: i, content: el.to_json, download_id: download_id)
 
-      cxt['input'] = el
-
       begin
+        cxt = V8::Context.new
+        cxt.eval(code)
+        process = cxt[:process]
+        cxt['input'] = el
         cxt['output'] = process.call(cxt['input'])
       rescue Exception => error
         output_error(download_id, error, i)
